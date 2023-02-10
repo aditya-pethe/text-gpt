@@ -6,7 +6,7 @@
   "scripts": {
     "start": "tsc && node dist/app.js",
     "lint": "eslint . --ext .ts",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "tsc && node dist/tests/testmessage.js"
   },
   "repository": {
     "type": "git",
@@ -27,6 +27,11 @@
     "typescript": "^4.9.5"
   },
   "dependencies": {
-    "express": "^4.17.1"
+    "dotenv": "^16.0.3",
+    "express": "^4.17.1",
+    "gpt3-tokenizer": "^1.1.5",
+    "openai": "^3.1.0",
+    "promptable": "^0.0.7",
+    "twilio": "^4.7.2"
   }
 }
