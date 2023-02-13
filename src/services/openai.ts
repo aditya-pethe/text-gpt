@@ -1,11 +1,15 @@
 const { Configuration, OpenAIApi } = require("openai");
 import GPT3Tokenizer from "gpt3-tokenizer";
+import { getChatLog } from "./chatlog";
+
 import axios from "axios";
 import * as dotenv from 'dotenv';
 dotenv.config();
 
 
+
 const tokenizer = new GPT3Tokenizer({ type: "gpt3" });
+const MAX_TOKENS = 500;
 
 function countBPETokens(text: string): number {
   const encoded = tokenizer.encode(text);
@@ -22,23 +26,32 @@ type OpenAIResponse = {
     text: string;
   };
   
+
+const createPrompt = async (message: string, phone: string): Promise<string> => {
+
+  const chatHistory = await getChatLog(phone);
+
+  const chatprompt = `You are a conversational chatbot, 
+  communicating over sms. As such, each of your answers can
+  be no longer than 1000 characters.
   
-function truncatePrompt(text: string, maxTokens: number): string {
-  const encoded = tokenizer.encode(text);
-  const numTokens = encoded.bpe.length;
-  const truncated = encoded.bpe.slice(numTokens - maxTokens);
-  const decoded = tokenizer.decode(truncated);
-  return decoded;
+  ${chatHistory}
+  Q:${message}
+  A: 
+  `
+  return chatprompt;
 }
 
 export const getReply = async (
     message: string,
+    phone: string,
   ): Promise<string> => {
 
     message = message.trim();
     const completion = await openai.createCompletion({
         model: "text-davinci-003",
-        prompt: message,
+        prompt: createPrompt(message, phone),
+        max_tokens: MAX_TOKENS,
         temperature: 0.6,
       });
 

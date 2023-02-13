@@ -23,7 +23,7 @@ app.post("/sms/reply", async (req, res) => {
 
     const userMessage = req.body.Body;
     const userPhone = req.body.From;
-    const message = await getReply(userMessage)
+    const message = await getReply(userMessage, userPhone);
   
     client.messages
       .create({
