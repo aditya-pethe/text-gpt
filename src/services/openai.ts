@@ -47,10 +47,12 @@ export const getReply = async (
     phone: string,
   ): Promise<string> => {
 
+    const prompt = await createPrompt(message, phone);
+
     message = message.trim();
     const completion = await openai.createCompletion({
         model: "text-davinci-003",
-        prompt: createPrompt(message, phone),
+        prompt: prompt,
         max_tokens: MAX_TOKENS,
         temperature: 0.6,
       });
