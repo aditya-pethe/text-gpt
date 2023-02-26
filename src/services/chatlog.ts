@@ -51,10 +51,4 @@ export const getChatLog = async (userPhone: string, messageLimit = 5) => {
     }
   };
 
-// const main = async() => {
-//     const res = await getChatLog("+18328140815");
-//     console.log(res);
-// }
-
-// main();
 
