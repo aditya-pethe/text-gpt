@@ -1,4 +1,4 @@
 # text-gpt
-talk to chat gpt from your phone
+talk to gpt3 from your phone
 
 #
